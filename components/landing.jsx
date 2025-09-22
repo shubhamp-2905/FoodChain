@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ChefHat, Utensils, Coffee, Pizza, Apple, Cookie, Soup, IceCream, Star, Zap, Shield, Clock, Users, Heart, Truck, Award, Package, Store, Handshake } from 'lucide-react';
 
@@ -12,45 +11,45 @@ const SupplyChainLanding = () => {
   }, []);
 
   const foodIcons = [
-    { Icon: Pizza, delay: '0s', color: 'text-orange-400' },
+    { Icon: Pizza, delay: '0s', color: 'text-orange-500' },
     { Icon: Coffee, delay: '0.2s', color: 'text-amber-600' },
-    { Icon: Apple, delay: '0.4s', color: 'text-red-400' },
+    { Icon: Apple, delay: '0.4s', color: 'text-red-500' },
     { Icon: Cookie, delay: '0.6s', color: 'text-yellow-500' },
-    { Icon: Soup, delay: '0.8s', color: 'text-green-400' },
-    { Icon: IceCream, delay: '1s', color: 'text-pink-400' },
+    { Icon: Soup, delay: '0.8s', color: 'text-green-500' },
+    { Icon: IceCream, delay: '1s', color: 'text-pink-500' },
   ];
 
   const features = [
     {
       icon: Package,
-      title: "We have Our ML Model",
-      description: "We know Distance matters..So here we have out ML model for showing you the nearest supplier you have",
-      color: "from-blue-400 to-cyan-500"
+      title: "Smart Distance Matching",
+      description: "Our ML model connects you with the nearest suppliers, reducing delivery time and costs while ensuring fresh ingredients.",
+      color: "from-blue-500 to-blue-600"
     },
     {
       icon: Truck,
-      title: "Wastage Estimation and Order Prediction Using LLM",
-      description: "Worried about how much to order we are here with our LLM Model that will guide you with quantity estimations.",
-      color: "from-green-400 to-emerald-500"
+      title: "Intelligent Order Prediction",
+      description: "AI-powered wastage estimation and order prediction helps you optimize inventory and reduce food waste significantly.",
+      color: "from-green-500 to-green-600"
     },
     {
       icon: Handshake,
-      title: "Compare with different sellers",
-      description: "We provide you with a platfrom where you can compare pricing with different sellers",
-      color: "from-purple-400 to-indigo-500"
+      title: "Price Comparison Platform",
+      description: "Compare prices across multiple verified suppliers to get the best deals and maximize your profit margins.",
+      color: "from-purple-500 to-purple-600"
     },
     {
       icon: Store,
-      title: "Community and support",
-      description: "Dedicated support team helping street vendors grow their business",
-      color: "from-orange-400 to-red-500"
+      title: "Community Support",
+      description: "Join a thriving community of street food vendors with dedicated support to help grow your business.",
+      color: "from-orange-500 to-orange-600"
     }
   ];
 
   // Calculate transform values for zoom effect
   const getTransformStyle = () => {
-    const scale = Math.max(0.8, 1 - scrollY * 0.0003);
-    const translateY = scrollY * 0.1;
+    const scale = Math.max(0.95, 1 - scrollY * 0.0002);
+    const translateY = scrollY * 0.05;
     return {
       transform: `scale(${scale}) translateY(${translateY}px)`,
       transformOrigin: 'center center'
@@ -58,215 +57,108 @@ const SupplyChainLanding = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-emerald-100 to-cyan-200 relative overflow-hidden">
-      {/* Enhanced Background Design */}
+    <div className="min-h-screen bg-white relative overflow-hidden">
+      {/* Clean Background Design */}
       <div className="absolute inset-0">
-        {/* Main gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-teal-100/30 via-emerald-200/40 to-cyan-100/30"></div>
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50/80 via-white to-green-50/80"></div>
         
-        {/* Geometric patterns */}
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-teal-200/40 to-emerald-300/40 rounded-full blur-xl"></div>
-          <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-r from-cyan-200/30 to-teal-300/30 rounded-full blur-2xl"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-r from-emerald-200/40 to-cyan-300/40 rounded-full blur-xl"></div>
-          <div className="absolute bottom-40 right-10 w-36 h-36 bg-gradient-to-r from-teal-300/30 to-emerald-200/30 rounded-full blur-xl"></div>
-        </div>
-
-        {/* Additional Shape Designs */}
-        <div className="absolute inset-0">
-          {/* Triangular shapes */}
-          <div className="absolute top-20 left-1/3 w-0 h-0 border-l-[40px] border-r-[40px] border-b-[70px] border-l-transparent border-r-transparent border-b-teal-200/30 rotate-12"></div>
-          <div className="absolute bottom-32 right-1/3 w-0 h-0 border-l-[30px] border-r-[30px] border-b-[50px] border-l-transparent border-r-transparent border-b-emerald-300/25 -rotate-45"></div>
-          
-          {/* Square shapes */}
-          <div className="absolute top-1/3 right-12 w-16 h-16 bg-gradient-to-br from-cyan-200/30 to-teal-300/20 rotate-45 rounded-lg"></div>
-          <div className="absolute bottom-1/4 left-16 w-12 h-12 bg-gradient-to-br from-emerald-300/25 to-cyan-200/20 rotate-12 rounded-md"></div>
-          
-          {/* Hexagonal shapes */}
-          <div className="absolute top-1/2 left-8 w-20 h-20 bg-teal-200/20 transform rotate-30" style={{
-            clipPath: 'polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%)'
-          }}></div>
-          <div className="absolute top-16 right-1/4 w-14 h-14 bg-emerald-300/25 transform -rotate-15" style={{
-            clipPath: 'polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%)'
-          }}></div>
-          
-          {/* Diamond shapes */}
-          <div className="absolute bottom-16 left-1/2 w-10 h-10 bg-gradient-to-r from-cyan-300/30 to-teal-200/25 transform rotate-45"></div>
-          <div className="absolute top-3/4 right-20 w-8 h-8 bg-gradient-to-r from-emerald-200/35 to-cyan-300/20 transform rotate-45"></div>
-          
-          {/* Circular ring shapes */}
-          <div className="absolute top-40 left-20 w-24 h-24 border-4 border-teal-300/25 rounded-full"></div>
-          <div className="absolute bottom-40 right-32 w-16 h-16 border-3 border-emerald-200/30 rounded-full"></div>
-          
-          {/* Wave-like curved shapes */}
-          <div className="absolute top-1/4 left-1/2 w-32 h-8 bg-gradient-to-r from-transparent via-cyan-200/20 to-transparent rounded-full transform -rotate-12"></div>
-          <div className="absolute bottom-1/3 right-1/2 w-28 h-6 bg-gradient-to-r from-transparent via-emerald-300/25 to-transparent rounded-full transform rotate-45"></div>
-        </div>
-
-        {/* Grid pattern */}
+        {/* Geometric patterns - more subtle */}
         <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-32 h-32 bg-orange-200 rounded-full blur-3xl"></div>
+          <div className="absolute top-40 right-20 w-40 h-40 bg-green-200 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-40 left-1/4 w-36 h-36 bg-yellow-200 rounded-full blur-3xl"></div>
+        </div>
+
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-5">
           <div className="w-full h-full" style={{
             backgroundImage: `
-              linear-gradient(rgba(20,184,166,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(20,184,166,0.1) 1px, transparent 1px)
+              linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)
             `,
-            backgroundSize: '50px 50px'
+            backgroundSize: '60px 60px'
           }}></div>
         </div>
-
-        {/* Animated particles */}
-        {[...Array(30)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full bg-teal-400 animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${Math.random() * 4 + 2}px`,
-              height: `${Math.random() * 4 + 2}px`,
-              opacity: Math.random() * 0.3 + 0.1,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${Math.random() * 3 + 2}s`
-            }}
-          />
-        ))}
       </div>
 
-      {/* Hero Section with Zoom Effect */}
+      {/* Hero Section with Clean Design */}
       <section className="relative min-h-screen flex items-center justify-center px-4" style={getTransformStyle()}>
-        <div className="text-center z-10 max-w-4xl mx-auto">
-          {/* Floating Food Icons */}
+        <div className="text-center z-10 max-w-5xl mx-auto">
+          {/* Subtle Floating Food Icons */}
           <div className="absolute inset-0 pointer-events-none">
             {foodIcons.map(({ Icon, delay, color }, index) => (
               <div
                 key={index}
-                className={`absolute ${color}`}
+                className={`absolute ${color} opacity-40`}
                 style={{
-                  left: `${15 + (index * 12)}%`,
-                  top: `${20 + Math.sin(index) * 30}%`,
-                  animation: `bounce 3s infinite ${delay}, float 6s ease-in-out infinite ${delay}`
+                  left: `${10 + (index * 13)}%`,
+                  top: `${15 + Math.sin(index) * 25}%`,
+                  animation: `gentle-float 4s ease-in-out infinite ${delay}`
                 }}
               >
-                <Icon size={40 + Math.random() * 20} />
+                <Icon size={32} />
               </div>
             ))}
           </div>
 
-          {/* Main Logo Animation */}
-          <div className="mb-8 relative">
-            <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 shadow-2xl mb-6">
-              <ChefHat className="w-16 h-16 text-white animate-bounce" />
+          {/* Clean Logo Design */}
+          <div className="mb-12 relative">
+            <div className="inline-flex items-center justify-center w-24 h-24 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 shadow-lg mb-8">
+              <ChefHat className="w-12 h-12 text-white" />
             </div>
           </div>
 
-          {/* Enhanced Title with Better Highlighting */}
-          <div className="relative mb-6">
-            {/* Multiple layered backgrounds for better highlighting */}
-            <div className="absolute inset-0 -m-12">
-              {/* Main highlight background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-teal-100/30 to-white/20 rounded-3xl blur-2xl"></div>
-              
-              {/* Secondary glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-200/25 via-cyan-200/35 to-teal-200/25 rounded-3xl blur-xl"></div>
-              
-              {/* Inner highlight */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-3xl blur-sm"></div>
-              
-              {/* Enhanced sparkle effects */}
-              <div className="absolute top-2 right-6 w-4 h-4 bg-teal-400/80 rounded-full animate-ping"></div>
-              <div className="absolute bottom-3 left-8 w-3 h-3 bg-emerald-400/80 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
-              <div className="absolute top-8 left-1/3 w-3 h-3 bg-cyan-400/80 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
-              <div className="absolute bottom-4 right-1/4 w-4 h-4 bg-teal-500/80 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
-              <div className="absolute top-1/2 left-6 w-2 h-2 bg-emerald-500/80 rounded-full animate-ping" style={{ animationDelay: '2s' }}></div>
-              
-              {/* Border highlight */}
-              <div className="absolute inset-4 border-2 border-teal-300/30 rounded-2xl animate-pulse"></div>
-            </div>
-            
-            <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-teal-700 via-emerald-600 to-[#213A57] bg-clip-text text-transparent drop-shadow-lg cinzel-bold">
-              Food Chain
+          {/* Professional Title */}
+          <div className="relative mb-8">
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-4 tracking-tight">
+              Food<span className="text-orange-600">Chain</span>
             </h1>
+            <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-red-500 mx-auto rounded-full"></div>
           </div>
 
-          {/* Animated Subtitle */}
-          <p className="text-xl md:text-2xl text-slate-700 mb-12 font-light tracking-wide">
-            Connecting suppliers with street vendors
-            <br />
-            <span className="text-lg text-teal-600 italic">Empowering local food businesses</span>
-          </p>
+          {/* Clean Subtitle */}
+          <div className="mb-16">
+            <p className="text-xl md:text-2xl text-gray-700 mb-4 font-light">
+              Connecting Suppliers with Street Food Vendors
+            </p>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Streamline your supply chain, reduce costs, and grow your street food business with our intelligent platform
+            </p>
+          </div>
 
-          {/* Changed Button Color to Green */}
+          {/* Professional CTA Button */}
           <div className="relative">
             <button
               onClick={() => window.location.href = '/login'}
-              className="relative px-12 py-6 bg-gradient-to-r from-emerald-500 via-[#213A57] to-teal-500 rounded-full text-white font-bold text-xl shadow-2xl animate-bounce"
-              style={{ animationDuration: '2s' }}
+              className="group relative px-12 py-4 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 rounded-xl text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
             >
-              <div className="flex items-center space-x-3 text-white">
-                <Package className="w-6 h-6 animate-spin text-white" style={{ animationDuration: '3s' }} />
-                <span className="text-white">Get Started</span>
-                <Store className="w-6 h-6 animate-pulse text-white" />
+              <div className="flex items-center space-x-3">
+                <Store className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
+                <span>Get Started Today</span>
+                <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
+                  <div className="w-2 h-2 bg-white rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                </div>
               </div>
             </button>
           </div>
-
-         
-         
         </div>
       </section>
 
-      {/* Features Section with Dark Theme */}
-      <section className="py-20 px-4 relative bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900 overflow-hidden">
-        {/* Dark Background Elements */}
-        <div className="absolute inset-0">
-          {/* Dark gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/50 via-gray-800/60 to-slate-900/50"></div>
-          
-          {/* Dark geometric patterns */}
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-teal-500/20 to-emerald-500/20 rounded-full blur-xl"></div>
-            <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-r from-cyan-500/15 to-teal-500/15 rounded-full blur-2xl"></div>
-            <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-full blur-xl"></div>
-            <div className="absolute bottom-40 right-10 w-36 h-36 bg-gradient-to-r from-teal-500/15 to-emerald-500/15 rounded-full blur-xl"></div>
-          </div>
-
-          {/* Dark grid pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="w-full h-full" style={{
-              backgroundImage: `
-                linear-gradient(rgba(20, 184, 165, 0.63) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(1, 79, 69, 0.6) 1px, transparent 1px)
-              `,
-              backgroundSize: '50px 50px'
-            }}></div>
-          </div>
-
-          {/* Dark animated particles */}
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full bg-teal-400/30 animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${Math.random() * 3 + 1}px`,
-                height: `${Math.random() * 3 + 1}px`,
-                opacity: Math.random() * 0.5 + 0.1,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${Math.random() * 4 + 3}s`
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="max-w-6xl mx-auto relative z-10">
+      {/* Features Section with Professional Design */}
+      <section className="py-24 px-4 relative bg-gray-50">
+        <div className="max-w-7xl mx-auto relative z-10">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-white mb-6">
-              Why Choose Our Platform?
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center px-4 py-2 bg-orange-100 text-orange-800 rounded-full text-sm font-medium mb-6">
+              <Award className="w-4 h-4 mr-2" />
+              Why Choose Our Platform
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Built for Street Food Success
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Experience seamless supply chain management designed specifically for street food vendors
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Our platform combines cutting-edge technology with deep understanding of street food business needs
             </p>
           </div>
 
@@ -275,92 +167,104 @@ const SupplyChainLanding = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="group relative bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-teal-400/50 transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-2xl shadow-lg hover:bg-white/15"
+                className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl border border-gray-100 hover:border-orange-200 transition-all duration-500 hover:-translate-y-2"
               >
-                {/* Icon with Gradient Background */}
-                <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                  <feature.icon className="w-8 h-8 text-white" />
+                {/* Icon with Clean Background */}
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-r ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <feature.icon className="w-7 h-7 text-white" />
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-teal-400 transition-colors duration-300">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-orange-600 transition-colors duration-300">
                   {feature.title}
                 </h3>
-                <p className="text-gray-300 group-hover:text-gray-200 transition-colors duration-300">
+                <p className="text-gray-600 leading-relaxed">
                   {feature.description}
                 </p>
-
-                {/* Hover Glow Effect */}
-                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-xl`}></div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* New Image and Info Section */}
-      <section className="py-20 px-4 relative bg-gradient-to-br from-teal-50 via-emerald-100 to-cyan-200">
+      {/* Enhanced Image and Info Section */}
+      <section className="py-24 px-4 relative bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left side - Image placeholder */}
-            <div className="relative">
-              <div className="relative bg-gradient-to-br from-white/60 to-white/40 backdrop-blur-sm rounded-3xl p-8 border border-teal-200/50">
-                <div className="aspect-square bg-gradient-to-br from-teal-200/40 to-emerald-300/40 rounded-2xl overflow-hidden relative">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left side - Professional Image */}
+            <div className="relative order-2 lg:order-1">
+              <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8 shadow-sm">
+                <div className="aspect-square bg-gradient-to-br from-orange-100 to-red-100 rounded-2xl overflow-hidden relative">
                   <img 
                     src="/stall.png" 
-                    alt="Food Chain" 
-                    className="absolute inset-0 w-full h-full object-cover"
+                    alt="Street Food Vendor" 
+                    className="absolute inset-0 w-full h-full object-cover rounded-2xl"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-2xl"></div>
                 </div>
 
-                {/* Decorative elements */}
-                <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-r from-teal-400 to-emerald-500 rounded-full opacity-60"></div>
-                <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-gradient-to-r from-emerald-400 to-cyan-500 rounded-full opacity-40"></div>
+                {/* Clean decorative elements */}
+                <div className="absolute -top-4 -right-4 w-8 h-8 bg-orange-500 rounded-lg rotate-45 opacity-80"></div>
+                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-red-500 rounded-full opacity-60"></div>
               </div>
             </div>
 
-            {/* Right side - Information */}
-            <div className="space-y-8">
+            {/* Right side - Professional Information */}
+            <div className="space-y-8 order-1 lg:order-2">
               <div>
-                <h2 className="text-4xl font-bold text-slate-800 mb-6">
+                <div className="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium mb-6">
+                  <Handshake className="w-4 h-4 mr-2" />
+                  Our Mission
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
                   Bridging the Gap Between 
-                  <span className="bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent"> Suppliers & Street Vendors</span>
+                  <span className="block text-orange-600 mt-2">Suppliers & Vendors</span>
                 </h2>
-                <p className="text-slate-700 text-lg leading-relaxed">
-                  Our platform connects raw material suppliers directly with street food vendors, 
-                  eliminating middlemen and ensuring fair prices for quality ingredients. 
-                  We're revolutionizing the street food supply chain across India.
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  We connect raw material suppliers directly with street food vendors, eliminating middlemen and ensuring fair prices for quality ingredients. Join thousands of vendors already growing their business with us.
                 </p>
               </div>
 
               <div className="grid gap-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-teal-400 to-emerald-500 rounded-lg flex items-center justify-center">
+                <div className="flex items-start space-x-4 group">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Handshake className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-slate-800 mb-2">Direct Partnerships</h3>
-                    <p className="text-slate-600">Connect directly with verified suppliers and build lasting business relationships</p>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                      Direct Partnerships
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      Connect directly with verified suppliers and build lasting business relationships that benefit both parties.
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-emerald-400 to-cyan-500 rounded-lg flex items-center justify-center">
+                <div className="flex items-start space-x-4 group">
+                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Shield className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-slate-800 mb-2">Quality Assured</h3>
-                    <p className="text-slate-600">All suppliers are verified and materials undergo quality checks before delivery</p>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                      Quality Assured
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      All suppliers are thoroughly verified and materials undergo strict quality checks before delivery.
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-cyan-400 to-teal-500 rounded-lg flex items-center justify-center">
+                <div className="flex items-start space-x-4 group">
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Zap className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-slate-800 mb-2">Smart Logistics</h3>
-                    <p className="text-slate-600">Optimized delivery routes and inventory management for efficient operations</p>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+                      Smart Technology
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      Leverage AI-powered logistics and inventory management for the most efficient operations possible.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -369,135 +273,59 @@ const SupplyChainLanding = () => {
         </div>
       </section>
 
-      {/* Attractive Animated Footer */}
-      <footer className="relative bg-gradient-to-r from-slate-900 via-gray-900 to-slate-800 py-16 overflow-hidden">
-        {/* Animated Background Elements */}
+      {/* Professional Footer */}
+      <footer className="relative bg-gray-900 py-16 overflow-hidden">
+        {/* Subtle Background Elements */}
         <div className="absolute inset-0">
-          {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-teal-600/10 via-emerald-500/15 to-cyan-600/10"></div>
-          
-          {/* Floating orbs */}
-          <div className="absolute top-10 left-10 w-24 h-24 bg-gradient-to-r from-teal-400/20 to-emerald-400/20 rounded-full blur-xl animate-pulse" style={{ animationDuration: '3s' }}></div>
-          <div className="absolute bottom-10 right-20 w-32 h-32 bg-gradient-to-r from-cyan-400/15 to-teal-400/15 rounded-full blur-2xl animate-pulse" style={{ animationDuration: '4s', animationDelay: '1s' }}></div>
-          <div className="absolute top-1/2 left-1/3 w-20 h-20 bg-gradient-to-r from-emerald-400/25 to-cyan-400/25 rounded-full blur-lg animate-pulse" style={{ animationDuration: '5s', animationDelay: '2s' }}></div>
-          
-          {/* Animated lines */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-teal-400/50 to-transparent animate-pulse"></div>
-          <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent animate-pulse" style={{ animationDelay: '1s' }}></div>
-          
-          {/* Moving particles */}
-          {[...Array(15)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full bg-teal-400/40 animate-float"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${Math.random() * 6 + 2}px`,
-                height: `${Math.random() * 6 + 2}px`,
-                animationDelay: `${Math.random() * 4}s`,
-                animationDuration: `${Math.random() * 4 + 3}s`
-              }}
-            />
-          ))}
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900"></div>
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
         </div>
 
         {/* Main Footer Content */}
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-          {/* Team Name with Spectacular Effects */}
-          <div className="relative mb-8">
-            {/* Glowing background */}
-            <div className="absolute inset-0 -m-8">
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 via-emerald-400/30 to-cyan-500/20 rounded-3xl blur-2xl animate-pulse"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent rounded-3xl blur-sm animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-            </div>
-            
-            {/* Sparkle effects around the text */}
-            <div className="absolute -top-4 -left-4 w-3 h-3 bg-teal-400 rounded-full animate-ping"></div>
-            <div className="absolute -top-2 right-8 w-2 h-2 bg-emerald-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
-            <div className="absolute -bottom-3 left-12 w-4 h-4 bg-cyan-400 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
-            <div className="absolute -bottom-4 -right-6 w-3 h-3 bg-teal-500 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
-            <div className="absolute top-1/2 -left-8 w-2 h-2 bg-emerald-500 rounded-full animate-ping" style={{ animationDelay: '2s' }}></div>
-            <div className="absolute top-1/3 -right-4 w-2 h-2 bg-cyan-500 rounded-full animate-ping" style={{ animationDelay: '2.5s' }}></div>
-            
-            {/* Main text */}
-            <h3 className="text-2xl font-light text-gray-300 mb-2 animate-pulse">Made with ❤️ by</h3>
-            <h2 className="text-6xl md:text-7xl font-black bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400 bg-clip-text text-transparent animate-shimmer relative">
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
+          {/* Team Section */}
+          <div className="mb-12">
+            <p className="text-gray-400 text-lg mb-4">Proudly developed by</p>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-orange-400 via-red-400 to-pink-400 bg-clip-text text-transparent mb-6">
               Team Zenith
-              {/* Underline effect */}
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400 rounded-full animate-pulse"></div>
             </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-red-400 mx-auto rounded-full"></div>
           </div>
 
-          {/* Animated Icons */}
-          <div className="flex justify-center space-x-8 mb-8">
-            <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-emerald-700 rounded-full flex items-center justify-center animate-bounce shadow-lg">
-              <Star className="w-6 h-6 text-white animate-spin" style={{ animationDuration: '3s' }} />
+          {/* Icons */}
+          <div className="flex justify-center space-x-6 mb-8">
+            <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+              <Star className="w-6 h-6 text-white" />
             </div>
-            <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full flex items-center justify-center animate-bounce shadow-lg" style={{ animationDelay: '0.2s' }}>
-              <Zap className="w-6 h-6 text-white animate-pulse" />
+            <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+              <Heart className="w-6 h-6 text-white" />
             </div>
-            <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full flex items-center justify-center animate-bounce shadow-lg" style={{ animationDelay: '0.4s' }}>
-              <Heart className="w-6 h-6 text-white animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+              <Zap className="w-6 h-6 text-white" />
             </div>
           </div>
 
           {/* Footer Message */}
-          <p className="text-gray-400 text-lg font-light animate-fade-in-up">
-            Empowering the future of street food supply chains
+          <p className="text-gray-400 text-lg mb-6">
+            Empowering the future of street food supply chains across India
           </p>
           
           {/* Year */}
-          <div className="mt-6 text-gray-500 text-sm animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            © 2025 Food Chain Platform
+          <div className="text-gray-500 text-sm border-t border-gray-800 pt-8">
+            © 2025 Food Chain Platform. All rights reserved.
           </div>
         </div>
-
-        {/* Bottom Border Animation */}
-        <div className="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-teal-500/0 via-emerald-400/60 to-teal-500/0 animate-pulse"></div>
       </footer>
 
       <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        
-        @keyframes fade-in-up {
-          0% {
-            opacity: 0;
-            transform: translateY(20px);
+        @keyframes gentle-float {
+          0%, 100% { 
+            transform: translateY(0px) rotate(0deg); 
+            opacity: 0.4;
           }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fade-in-up {
-          animation: fade-in-up 1s ease-out forwards;
-        }
-        
-        .animate-shimmer {
-          background-size: 200% 200%;
-          animation: shimmer 3s ease-in-out infinite;
-        }
-        
-        @keyframes shimmer {
-          0% {
-            background-position: -200% center;
-          }
-          100% {
-            background-position: 200% center;
+          50% { 
+            transform: translateY(-10px) rotate(2deg); 
+            opacity: 0.6;
           }
         }
       `}</style>

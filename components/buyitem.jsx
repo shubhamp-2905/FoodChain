@@ -7,37 +7,37 @@ const SellerDetails = ({ seller, onBack }) => {
   return (
     <div className="max-w-4xl mx-auto p-6">
       {/* Header with Back Button */}
-      <div className="flex items-center mb-6">
+      <div className="flex items-center mb-8">
         <button 
           onClick={onBack}
-          className="flex items-center gap-2 text-[#086477] hover:text-[#213A57] font-medium transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-all duration-200"
         >
           <FaArrowLeft /> Back to Sellers
         </button>
       </div>
 
       {/* Seller Profile Card */}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-[#45DFB1]">
+      <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
         {/* Header Section */}
-        <div className="bg-gradient-to-r from-[#14919B] to-[#0AD1C8] p-8 text-white">
+        <div className="bg-gradient-to-r from-orange-500 to-red-600 p-8 text-white">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="bg-white/20 p-4 rounded-full">
+            <div className="flex items-center gap-6">
+              <div className="bg-white/20 p-4 rounded-2xl backdrop-blur-sm">
                 <FaUser className="text-3xl" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold">
+                <h1 className="text-3xl font-bold mb-2">
                   {seller.Name || `Seller ${seller.Seller_ID}`}
                 </h1>
-                <div className="flex items-center gap-4 mt-2">
-                  <div className="flex items-center gap-1">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
                     <FaStar className="text-yellow-300" />
                     <span className="text-lg font-medium">
                       {(seller.Rating || 0).toFixed(1)}/5.0
                     </span>
                   </div>
                   {seller.Verified && (
-                    <div className="flex items-center gap-1 bg-green-500 px-3 py-1 rounded-full">
+                    <div className="flex items-center gap-2 bg-green-500 px-3 py-1.5 rounded-full">
                       <FaCheckCircle className="text-sm" />
                       <span className="text-sm font-medium">Verified Seller</span>
                     </div>
@@ -46,8 +46,8 @@ const SellerDetails = ({ seller, onBack }) => {
               </div>
             </div>
             <div className="text-right">
-              <div className="text-sm opacity-90">Seller ID</div>
-              <div className="text-lg font-mono">{seller.Seller_ID}</div>
+              <div className="text-sm opacity-90 mb-1">Seller ID</div>
+              <div className="text-lg font-mono bg-white/20 px-3 py-1 rounded-lg">{seller.Seller_ID}</div>
             </div>
           </div>
         </div>
@@ -58,21 +58,21 @@ const SellerDetails = ({ seller, onBack }) => {
             
             {/* Contact Information */}
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-[#213A57] border-b border-[#45DFB1] pb-2">
+              <h2 className="text-2xl font-bold text-gray-900 pb-3 border-b-2 border-orange-200">
                 Contact Information
               </h2>
               
               <div className="space-y-4">
                 {seller.Email && (
-                  <div className="flex items-center gap-3 p-4 bg-[#f0fffe] rounded-lg border border-[#45DFB1]">
-                    <div className="bg-[#0AD1C8] p-2 rounded-full text-white">
+                  <div className="flex items-center gap-4 p-4 bg-orange-50 rounded-xl border border-orange-200">
+                    <div className="bg-orange-500 p-3 rounded-xl text-white">
                       <FaEnvelope />
                     </div>
                     <div>
-                      <div className="text-sm text-gray-600">Email Address</div>
+                      <div className="text-sm font-semibold text-gray-600">Email Address</div>
                       <a 
                         href={`mailto:${seller.Email}`}
-                        className="text-[#086477] font-medium hover:underline"
+                        className="text-orange-600 font-medium hover:text-orange-700 hover:underline"
                       >
                         {seller.Email}
                       </a>
@@ -81,15 +81,15 @@ const SellerDetails = ({ seller, onBack }) => {
                 )}
 
                 {seller.Mobile && (
-                  <div className="flex items-center gap-3 p-4 bg-[#f0fffe] rounded-lg border border-[#45DFB1]">
-                    <div className="bg-[#0AD1C8] p-2 rounded-full text-white">
+                  <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-xl border border-blue-200">
+                    <div className="bg-blue-500 p-3 rounded-xl text-white">
                       <FaPhone />
                     </div>
                     <div>
-                      <div className="text-sm text-gray-600">Mobile Number</div>
+                      <div className="text-sm font-semibold text-gray-600">Mobile Number</div>
                       <a 
                         href={`tel:${seller.Mobile}`}
-                        className="text-[#086477] font-medium hover:underline"
+                        className="text-blue-600 font-medium hover:text-blue-700 hover:underline"
                       >
                         {seller.Mobile}
                       </a>
@@ -97,13 +97,13 @@ const SellerDetails = ({ seller, onBack }) => {
                   </div>
                 )}
 
-                <div className="flex items-center gap-3 p-4 bg-[#f0fffe] rounded-lg border border-[#45DFB1]">
-                  <div className="bg-[#0AD1C8] p-2 rounded-full text-white">
+                <div className="flex items-center gap-4 p-4 bg-green-50 rounded-xl border border-green-200">
+                  <div className="bg-green-500 p-3 rounded-xl text-white">
                     <FaMapMarkerAlt />
                   </div>
                   <div>
-                    <div className="text-sm text-gray-600">Location</div>
-                    <div className="text-[#086477] font-medium">
+                    <div className="text-sm font-semibold text-gray-600">Location</div>
+                    <div className="text-green-700 font-medium">
                       {seller.Locality || "Location not specified"}
                     </div>
                   </div>
@@ -113,14 +113,14 @@ const SellerDetails = ({ seller, onBack }) => {
 
             {/* Seller Statistics */}
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-[#213A57] border-b border-[#45DFB1] pb-2">
+              <h2 className="text-2xl font-bold text-gray-900 pb-3 border-b-2 border-orange-200">
                 Seller Details
               </h2>
               
               <div className="space-y-4">
-                <div className="bg-gradient-to-r from-[#80ED99] to-[#45DFB1] p-6 rounded-lg text-white">
-                  <div className="text-sm opacity-90">Overall Rating</div>
-                  <div className="text-3xl font-bold flex items-center gap-2">
+                <div className="bg-gradient-to-r from-orange-500 to-red-600 p-6 rounded-2xl text-white">
+                  <div className="text-sm opacity-90 mb-2">Overall Rating</div>
+                  <div className="text-3xl font-bold flex items-center gap-2 mb-2">
                     <FaStar className="text-yellow-300" />
                     {(seller.Rating || 0).toFixed(1)}
                   </div>
@@ -128,30 +128,30 @@ const SellerDetails = ({ seller, onBack }) => {
                 </div>
 
                 {seller.Price_per_kg !== undefined && (
-                  <div className="bg-[#f8f9fa] p-4 rounded-lg border border-[#e9ecef]">
-                    <div className="text-sm text-gray-600">Price per Kg</div>
-                    <div className="text-2xl font-bold text-[#0AD1C8]">
+                  <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                    <div className="text-sm font-semibold text-gray-600 mb-2">Price per Kg</div>
+                    <div className="text-3xl font-bold text-orange-600">
                       ₹{seller.Price_per_kg.toFixed(2)}
                     </div>
                   </div>
                 )}
 
                 {seller.Distance_km !== undefined && (
-                  <div className="bg-[#f8f9fa] p-4 rounded-lg border border-[#e9ecef]">
-                    <div className="text-sm text-gray-600">Distance from You</div>
-                    <div className="text-xl font-semibold text-[#213A57]">
+                  <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                    <div className="text-sm font-semibold text-gray-600 mb-2">Distance from You</div>
+                    <div className="text-2xl font-bold text-gray-900">
                       {seller.Distance_km.toFixed(2)} km
                     </div>
                   </div>
                 )}
 
                 {seller.Score !== undefined && (
-                  <div className="bg-[#f8f9fa] p-4 rounded-lg border border-[#e9ecef]">
-                    <div className="text-sm text-gray-600">Seller Score</div>
-                    <div className="text-xl font-semibold text-[#213A57]">
+                  <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                    <div className="text-sm font-semibold text-gray-600 mb-2">Seller Score</div>
+                    <div className="text-2xl font-bold text-gray-900">
                       {seller.Score.toFixed(3)}
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">
+                    <div className="text-xs text-gray-500 mt-2">
                       Based on rating, distance, and price
                     </div>
                   </div>
@@ -161,12 +161,12 @@ const SellerDetails = ({ seller, onBack }) => {
           </div>
 
           {/* Action Buttons */}
-          <div className="mt-8 pt-6 border-t border-[#45DFB1]">
-            <div className="flex gap-4 justify-center">
+          <div className="mt-10 pt-8 border-t border-gray-200">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {seller.Email && (
                 <a 
                   href={`mailto:${seller.Email}`}
-                  className="bg-[#0AD1C8] hover:bg-[#086477] text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
                 >
                   <FaEnvelope /> Send Email
                 </a>
@@ -174,7 +174,7 @@ const SellerDetails = ({ seller, onBack }) => {
               {seller.Mobile && (
                 <a 
                   href={`tel:${seller.Mobile}`}
-                  className="bg-[#80ED99] hover:bg-[#45DFB1] text-[#213A57] px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
                 >
                   <FaPhone /> Call Now
                 </a>
@@ -434,8 +434,8 @@ const BuyItems = () => {
       <div className="max-w-6xl mx-auto p-6">
         <div className="flex justify-center items-center h-64">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0AD1C8] mx-auto mb-4"></div>
-            <p className="text-[#213A57]">Loading sellers...</p>
+            <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-700 text-lg">Loading sellers...</p>
           </div>
         </div>
       </div>
@@ -449,24 +449,24 @@ const BuyItems = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-[#213A57] mb-6 flex items-center">
-        <FaShoppingCart className="mr-2" /> Buy Food Items
-      </h1>
-      
-      {/* Debug Info */}
-      {/* { process.env.NODE_ENV === 'development' && (
-        <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg mb-6">
-          <strong>Debug:</strong> Found {sellers.length} sellers | Products: {availableProducts.length}
-        </div>
-      )} */}
+      {/* Page Header */}
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-gray-900 mb-3 flex items-center">
+          <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center mr-4">
+            <FaShoppingCart className="text-white" />
+          </div>
+          Find Suppliers
+        </h1>
+        <p className="text-gray-600 text-lg">Search and connect with verified food suppliers in your area</p>
+      </div>
       
       {/* Search Section */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6 border border-[#45DFB1]">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-8">
         <div className="mb-4">
-          <label htmlFor="product-search" className="block text-sm font-medium text-[#213A57] mb-2">
-            Search for a specific product:
+          <label htmlFor="product-search" className="block text-lg font-semibold text-gray-900 mb-4">
+            What are you looking for?
           </label>
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-4 items-center">
             <div className="flex-1 relative">
               <input
                 id="product-search"
@@ -477,18 +477,19 @@ const BuyItems = () => {
                 onFocus={() => setShowSuggestions(searchQuery.length > 0)}
                 onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
                 placeholder="e.g., Potatoes, Tomatoes, Rice, Milk..."
-                className="w-full px-4 py-3 border-2 border-[#45DFB1] rounded-lg focus:outline-none focus:border-[#0AD1C8] transition-colors"
+                className="w-full px-6 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 text-lg"
               />
               
               {showSuggestions && getFilteredSuggestions().length > 0 && (
-                <div className="absolute top-full left-0 right-0 bg-white border border-[#45DFB1] border-t-0 rounded-b-lg max-h-48 overflow-y-auto z-50 shadow-lg">
+                <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 border-t-0 rounded-b-xl max-h-48 overflow-y-auto z-50 shadow-lg">
                   {getFilteredSuggestions().map((product, index) => (
                     <div
                       key={index}
                       onClick={() => handleSuggestionClick(product)}
-                      className="px-4 py-3 cursor-pointer hover:bg-[#f0fffe] border-b border-[#45DFB1] last:border-b-0 flex items-center"
+                      className="px-6 py-4 cursor-pointer hover:bg-orange-50 border-b border-gray-100 last:border-b-0 flex items-center text-gray-700 hover:text-orange-700"
                     >
-                      🥬 <span className="ml-2">{product}</span>
+                      <span className="text-orange-500 mr-3">🥬</span>
+                      <span className="font-medium">{product}</span>
                     </div>
                   ))}
                 </div>
@@ -498,26 +499,27 @@ const BuyItems = () => {
             <button 
               onClick={handleSearchSellers}
               disabled={loading || !searchQuery.trim()}
-              className="px-6 py-3 bg-[#0AD1C8] hover:bg-[#086477] disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors flex items-center gap-2"
+              className="px-8 py-4 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-xl font-semibold transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl disabled:cursor-not-allowed"
             >
               <FaSearch />
-              {loading ? "Searching..." : "Find Sellers"}
+              {loading ? "Searching..." : "Find Suppliers"}
             </button>
             
             {hasSearched && (
               <button 
                 onClick={resetToInitialState}
-                className="px-4 py-3 bg-[#14919B] hover:bg-[#213A57] text-white rounded-lg font-medium transition-colors"
+                className="px-6 py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold transition-all duration-200"
               >
                 Show All
               </button>
             )}
           </div>
           
-          <p className="text-sm text-gray-600 mt-2">
-            💡 {hasSearched ? 
-              "Showing search results. Click 'Show All' to see all available sellers." : 
-              "Start typing to see product suggestions, or browse all available sellers below."
+          <p className="text-gray-500 mt-4 flex items-center">
+            <span className="mr-2">💡</span>
+            {hasSearched ? 
+              "Showing search results. Click 'Show All' to see all available suppliers." : 
+              "Start typing to see product suggestions, or browse all available suppliers below."
             }
           </p>
         </div>
@@ -525,26 +527,33 @@ const BuyItems = () => {
 
       {/* Error Display */}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
-          <strong>Error:</strong> {error}
+        <div className="bg-red-50 border-l-4 border-red-400 text-red-700 p-6 rounded-xl mb-8">
+          <div className="flex items-center">
+            <div className="w-6 h-6 bg-red-400 rounded-full flex items-center justify-center mr-3">
+              <span className="text-white text-sm font-bold">!</span>
+            </div>
+            <div>
+              <strong className="font-semibold">Error:</strong> {error}
+            </div>
+          </div>
         </div>
       )}
 
       {/* Loading State */}
       {loading && (
-        <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0AD1C8] mx-auto mb-2"></div>
-          <p className="text-[#213A57]">Searching for sellers...</p>
+        <div className="text-center py-12">
+          <div className="w-10 h-10 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-700 text-lg">Searching for suppliers...</p>
         </div>
       )}
 
       {/* Results Header */}
       {!loading && (
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold text-[#213A57]">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">
             {hasSearched ? 
               `Search Results for "${searchQuery}" (${sellers.length} found)` : 
-              `Available Sellers (${sellers.length})`
+              `Available Suppliers (${sellers.length})`
             }
           </h2>
         </div>
@@ -564,60 +573,62 @@ const BuyItems = () => {
             const isVerified = seller.Verified === true || seller.Verified === 1 || seller.Verified === "true";
             
             return (
-              <div key={`seller-${seller.Seller_ID || index}`} className="bg-white rounded-lg shadow-md overflow-hidden border border-[#45DFB1] hover:shadow-lg transition-shadow">
-                <div className="bg-[#14919B] p-4 text-white">
-                  <h3 className="text-xl font-semibold truncate">
+              <div key={`seller-${seller.Seller_ID || index}`} className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-all duration-200">
+                <div className="bg-gradient-to-r from-orange-500 to-red-600 p-6 text-white">
+                  <h3 className="text-xl font-bold truncate mb-3">
                     {safeName}
                   </h3>
-                  <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center">
-                      <FaStar className="text-yellow-300 mr-1" />
-                      <span>{safeRating.toFixed(1)}/5.0</span>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <FaStar className="text-yellow-300" />
+                      <span className="font-semibold">{safeRating.toFixed(1)}/5.0</span>
                     </div>
                     {isVerified && (
-                      <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs">
+                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                         Verified
                       </span>
                     )}
                   </div>
                 </div>
                 
-                <div className="p-4">
-                  <div className="space-y-3">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <FaMapMarkerAlt className="mr-2 text-[#0AD1C8] flex-shrink-0" />
-                      <span className="truncate">{safeLocation}</span>
+                <div className="p-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center text-gray-600">
+                      <FaMapMarkerAlt className="mr-3 text-orange-500 flex-shrink-0" />
+                      <span className="truncate font-medium">{safeLocation}</span>
                     </div>
                     
                     {safeDistance !== null && (
-                      <div className="text-sm">
-                        <strong className="text-[#086477]">Distance:</strong> {safeDistance.toFixed(2)} km
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600 font-medium">Distance:</span>
+                        <span className="text-gray-900 font-bold">{safeDistance.toFixed(2)} km</span>
                       </div>
                     )}
                     
                     {safePrice !== null && (
-                      <div className="text-sm">
-                        <strong className="text-[#086477]">Price:</strong> 
-                        <span className="text-[#0AD1C8] font-bold ml-1">₹{safePrice.toFixed(2)}/kg</span>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600 font-medium">Price:</span>
+                        <span className="text-orange-600 font-bold text-lg">₹{safePrice.toFixed(2)}/kg</span>
                       </div>
                     )}
                     
                     {safeScore !== null && (
-                      <div className="text-sm">
-                        <strong className="text-[#086477]">Score:</strong> {safeScore.toFixed(3)}
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600 font-medium">Score:</span>
+                        <span className="text-gray-900 font-bold">{safeScore.toFixed(3)}</span>
                       </div>
                     )}
 
                     {/* Show Seller ID for debugging */}
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-gray-400 pt-2 border-t border-gray-100">
                       ID: {seller.Seller_ID || `temp-${index}`}
                     </div>
                   </div>
                   
-                  <div className="flex gap-2 mt-4">
+                  <div className="mt-6">
                     <button 
                       onClick={() => handleViewDetails(seller)}
-                      className="flex-1 bg-[#0AD1C8] hover:bg-[#086477] text-white py-2 px-4 rounded-lg transition-colors font-medium"
+                      className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white py-3 px-4 rounded-xl transition-all duration-200 font-semibold shadow-md hover:shadow-lg"
                     >
                       View Details
                     </button>
@@ -631,13 +642,13 @@ const BuyItems = () => {
 
       {/* No Results */}
       {!loading && sellers.length === 0 && !error && (
-        <div className="text-center py-12">
-          <div className="text-gray-400 text-6xl mb-4">🔍</div>
-          <h3 className="text-xl font-semibold text-[#213A57] mb-2">No sellers found</h3>
-          <p className="text-gray-600">
+        <div className="text-center py-16">
+          <div className="text-gray-300 text-8xl mb-6">🔍</div>
+          <h3 className="text-2xl font-bold text-gray-900 mb-3">No suppliers found</h3>
+          <p className="text-gray-600 text-lg max-w-md mx-auto">
             {hasSearched ? 
               "Try searching for a different product or check your spelling." : 
-              "No sellers are currently available. Please try again later."
+              "No suppliers are currently available. Please try again later."
             }
           </p>
         </div>

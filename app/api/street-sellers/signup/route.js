@@ -1,6 +1,7 @@
 import connectDB from "@/lib/dbConnect";
 import StreetSeller from "@/models/StreetSeller";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
@@ -9,6 +10,21 @@ export async function POST(req) {
 
     const body = await req.json();
     const { email, password, name, phone } = body;
+
+    // Input validation
+    if (!email || !password || !name || !phone) {
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 }
+      );
+    }
+
+    if (password.length < 6) {
+      return NextResponse.json(
+        { error: "Password must be at least 6 characters long" },
+        { status: 400 }
+      );
+    }
 
     // ✅ Check for existing email
     const existing = await StreetSeller.findOne({ email });
@@ -34,8 +50,21 @@ export async function POST(req) {
     createdBuyer.buyerId = createdBuyer._id.toString();
     await createdBuyer.save();
 
+    // ✅ Generate JWT Token
+    const token = jwt.sign(
+      {
+        userId: createdBuyer._id,
+        buyerId: createdBuyer.buyerId,
+        email: createdBuyer.email,
+        role: 'buyer'
+      },
+      process.env.JWT_SECRET || 'your-secret-key', // Make sure to set this in .env.local
+      { expiresIn: '7d' }
+    );
+
     return NextResponse.json({
       success: true,
+      token, // ✅ Return the token
       buyer: {
         id: createdBuyer._id,
         buyerId: createdBuyer.buyerId,
