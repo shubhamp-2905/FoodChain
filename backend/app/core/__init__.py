@@ -1,0 +1,1 @@
+# FoodChain AI - Core Configuration

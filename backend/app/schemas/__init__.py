@@ -1,0 +1,1 @@
+# FoodChain AI - Pydantic Schemas

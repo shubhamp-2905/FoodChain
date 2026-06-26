@@ -1,10 +1,32 @@
-flask 
-flask-cors 
-pandas 
-scikit-learn 
-joblib 
-geopy
-python-dotenv
-pymongo
-colorlog
-flask-restx
+# ============================================
+# FoodChain AI - Backend Dependencies
+# ============================================
+
+# --- Web Framework ---
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+
+# --- Database ---
+sqlalchemy==2.0.41
+psycopg2-binary==2.9.10
+alembic==1.16.1
+
+# --- Auth & Security ---
+python-jose[cryptography]==3.4.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.20
+
+# --- Validation ---
+pydantic==2.11.3
+pydantic-settings==2.9.1
+email-validator==2.2.0
+
+# --- Utilities ---
+python-dotenv==1.1.0
+
+# --- Machine Learning ---
+scikit-learn==1.6.1
+pandas==2.2.3
+numpy==2.2.3
+joblib==1.4.2
+

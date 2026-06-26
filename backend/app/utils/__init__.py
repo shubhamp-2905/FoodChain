@@ -1,0 +1,1 @@
+# FoodChain AI - Utility Functions
