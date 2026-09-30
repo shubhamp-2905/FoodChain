@@ -13,7 +13,8 @@ import {
   History,
   Trash2,
   Navigation,
-  Compass
+  Compass,
+  ShieldCheck
 } from "lucide-react";
 import dynamic from "next/dynamic";
 
@@ -28,6 +29,8 @@ import { Separator } from "@/components/ui/separator";
 import type { RecommendationResponse, SupplierRecommendation } from "@/types/recommendation";
 
 import SupplierDetailsDrawer from "./SupplierDetailsDrawer";
+import AuditTraceModal from "./AuditTraceModal";
+
 
 // Dynamic import for Leaflet map component (prevents Next.js SSR document undefined crashes)
 const MapComponent = dynamic(() => import("./MapComponent"), { ssr: false });
@@ -46,6 +49,7 @@ export default function RecommendationsPage() {
   const [activeSupplierId, setActiveSupplierId] = useState<number | null>(null);
   const [selectedSupplier, setSelectedSupplier] = useState<SupplierRecommendation | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
   
   // Geolocation state
   const [userCoords, setUserCoords] = useState<{ latitude: number; longitude: number } | null>(null);
@@ -297,18 +301,54 @@ export default function RecommendationsPage() {
               onSupplierSelect={selectSupplier}
             />
             
-            {/* Meta summary footer */}
+            {/* Meta summary footer with Trace Request ID */}
             <div className="flex flex-wrap justify-between items-center bg-slate-50 dark:bg-slate-900/30 p-4 border border-slate-100 dark:border-slate-800 rounded-2xl text-xs text-muted-foreground gap-4">
-              <span className="flex items-center gap-1"><Brain className="h-3.5 w-3.5 text-purple-500" /> Model Version: {results.metadata.model_version}</span>
-              <span>Checked: {results.metadata.suppliers_checked} suppliers</span>
-              <span>Radius Eligible: {results.metadata.eligible_suppliers} nearby</span>
-              <span className="font-semibold text-slate-700 dark:text-slate-300">Procured in: {results.metadata.processing_time_ms} ms</span>
+              <span className="flex items-center gap-1">
+                <Brain className="h-3.5 w-3.5 text-purple-500" /> Model: {results.metadata.model_version}
+              </span>
+              <span>Checked: {results.metadata.suppliers_checked}</span>
+              <span>Radius Eligible: {results.metadata.eligible_suppliers}</span>
+              <span className="font-semibold text-slate-700 dark:text-slate-300">
+                Procured in: {results.metadata.processing_time_ms} ms
+              </span>
+              {results.metadata.request_id && (
+                <div className="flex items-center gap-1.5 bg-white dark:bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
+                  <span className="font-mono text-[10px] text-slate-600 dark:text-slate-300">
+                    ID: {results.metadata.request_id.slice(0, 8)}...
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-5 px-1.5 text-[10px] hover:text-amber-600"
+                    onClick={() => {
+                      if (results.metadata.request_id) {
+                        navigator.clipboard.writeText(results.metadata.request_id);
+                        alert(`Trace Request ID copied to clipboard:\n${results.metadata.request_id}`);
+                      }
+                    }}
+                  >
+                    Copy Trace ID
+                  </Button>
+                  <Separator orientation="vertical" className="h-3" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-5 px-1.5 text-[10px] text-emerald-600 hover:text-emerald-700 font-semibold flex items-center gap-1"
+                    onClick={() => setIsAuditModalOpen(true)}
+                  >
+                    <ShieldCheck className="h-3 w-3" />
+                    Audit Trail
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
 
           {/* Right Column: Recommendations List */}
           <div className="lg:col-span-2 space-y-4 max-h-[480px] overflow-y-auto pr-1">
-            <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 tracking-wide uppercase">Top Recommendations</h3>
+            <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 tracking-wide uppercase">
+              Top Recommendations (Ranked by Business Score)
+            </h3>
             
             {/* Empty State checks */}
             {!results.best_supplier && results.alternatives.length === 0 && (
@@ -341,9 +381,16 @@ export default function RecommendationsPage() {
                   <CardContent className="p-5 space-y-3">
                     <div className="flex justify-between items-start">
                       <div>
-                        <Badge className="gradient-orange text-white text-[10px] px-2 py-0.5 border-0 rounded-full font-bold mb-1">
-                          Best Supplier
-                        </Badge>
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <Badge className="gradient-orange text-white text-[10px] px-2 py-0.5 border-0 rounded-full font-bold">
+                            Rank #{results.best_supplier.rank || 1} • Best Match
+                          </Badge>
+                          {results.best_supplier.cluster_label && (
+                            <Badge variant="outline" className="text-[9px] px-2 py-0.5 border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/30 rounded-full">
+                              Profile: {results.best_supplier.cluster_label}
+                            </Badge>
+                          )}
+                        </div>
                         <h4 className="font-bold text-base leading-snug group-hover:text-primary transition-colors">
                           {results.best_supplier.supplier_name}
                         </h4>
@@ -385,7 +432,7 @@ export default function RecommendationsPage() {
                     </div>
 
                     <div className="bg-amber-200/10 dark:bg-amber-950/20 p-2.5 rounded-lg border border-amber-300/20 text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed italic">
-                      &ldquo;{results.best_supplier.reason}&rdquo;
+                      &ldquo;{results.best_supplier.explanation || results.best_supplier.reason}&rdquo;
                     </div>
                   </CardContent>
                 </Card>
@@ -409,13 +456,15 @@ export default function RecommendationsPage() {
                   <CardContent className="p-4 space-y-2.5">
                     <div className="flex justify-between items-start">
                       <div>
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1.5 flex-wrap">
                           <Badge variant="outline" className="text-[9px] px-1.5 py-0 border-slate-200 text-slate-600 rounded-full font-medium">
-                            Alternative #{idx + 1}
+                            Rank #{supplier.rank || idx + 2}
                           </Badge>
-                          <Badge className="bg-slate-100 dark:bg-slate-800 text-[9px] text-muted-foreground px-1.5 py-0 border-0 rounded-full">
-                            {supplier.confidence}
-                          </Badge>
+                          {supplier.cluster_label && (
+                            <Badge variant="secondary" className="text-[9px] px-1.5 py-0 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full">
+                              {supplier.cluster_label}
+                            </Badge>
+                          )}
                         </div>
                         <h4 className="font-bold text-sm mt-1 group-hover:text-primary transition-colors">
                           {supplier.supplier_name}
@@ -447,7 +496,11 @@ export default function RecommendationsPage() {
                       </div>
                       <div>
                         <span className="text-[8px] text-muted-foreground uppercase block">Rating</span>
-                        <span className="font-semibold flex items-center justify-center gap-0.5"><Star className="h-3 w-3 fill-amber-400 text-amber-400" /> {supplier.rating}</span>
+                        {supplier.rating != null ? (
+                          <span className="font-semibold flex items-center justify-center gap-0.5"><Star className="h-3 w-3 fill-amber-400 text-amber-400" /> {supplier.rating.toFixed(1)}</span>
+                        ) : (
+                          <span className="font-semibold text-muted-foreground">Unrated</span>
+                        )}
                       </div>
                       <div>
                         <span className="text-[8px] text-muted-foreground uppercase block">Deliv</span>
@@ -465,15 +518,15 @@ export default function RecommendationsPage() {
       {/* Welcome Screen (No search made yet) */}
       {!results && !loading && (
         <Card className="border-0 shadow-md bg-gradient-to-r from-orange-50/50 to-amber-50/50 dark:from-orange-950/5 dark:to-amber-950/5 rounded-2xl">
-          <CardContent className="p-8 text-center max-w-xl mx-auto space-y-4">
+          <CardContent className="p-8 text-center max-w-2xl mx-auto space-y-4">
             <div className="h-16 w-16 bg-gradient-to-br from-orange-400 to-amber-500 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
               <Brain className="h-8 w-8 text-white" />
             </div>
             <h3 className="text-xl font-bold font-heading text-slate-900 dark:text-slate-50">
-              Procure with AI Recommendations
+              Procure with AI Recommendations & Auditable Pipeline
             </h3>
             <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-              Select or type an ingredient to find nearby suppliers. Our recommendation engine fits standard scaled K-Means clusters combined with customizable business weights for pricing, location coordinates, ratings, and delivery times.
+              Select or type an ingredient to find nearby verified suppliers. Our backend features an end-to-end Medallion data engineering pipeline (Bronze → Silver → Gold) feeding a Two-Branch decision architecture: deterministic weighted business ranking for authoritative order, paired with K-Means behavioral clustering for supplier cohort profiling and deterministic, value-grounded explainability.
             </p>
           </CardContent>
         </Card>
@@ -487,6 +540,13 @@ export default function RecommendationsPage() {
           setIsDrawerOpen(false);
           setSelectedSupplier(null);
         }}
+      />
+
+      {/* Decision Audit Provenance Modal */}
+      <AuditTraceModal
+        requestId={results?.metadata?.request_id || null}
+        isOpen={isAuditModalOpen}
+        onClose={() => setIsAuditModalOpen(false)}
       />
     </div>
   );

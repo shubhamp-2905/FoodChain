@@ -22,6 +22,8 @@ class UserProfileResponse(BaseModel):
     area: str | None = None
     city: str | None = None
     state: str | None = None
+    role: str = "vendor"
+    supplier_profile_id: int | None = None
     created_at: datetime
     updated_at: datetime
 

@@ -30,6 +30,7 @@ def get_password_hash(password: str) -> str:
 def create_access_token(
     subject: str | int,
     expires_delta: Optional[timedelta] = None,
+    role: str = "vendor",
 ) -> str:
     """
     Create a JWT access token.
@@ -37,6 +38,7 @@ def create_access_token(
     Args:
         subject: The token subject (typically user ID).
         expires_delta: Custom expiration time.
+        role: The user role ('vendor' or 'supplier').
 
     Returns:
         Encoded JWT string.
@@ -52,6 +54,7 @@ def create_access_token(
         "sub": str(subject),
         "exp": expire,
         "iat": datetime.now(timezone.utc),
+        "role": role,
     }
 
     return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)

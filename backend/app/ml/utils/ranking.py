@@ -30,14 +30,29 @@ def compute_ranking_scores(df: pd.DataFrame) -> pd.DataFrame:
     else:
         result["price_score"] = 1.0 - (result["price"] / max_price)
         
-    # 3. Rating score (higher is better, out of 5)
-    result["rating_score"] = result["rating"] / 5.0
+    # 3. Rating score (higher is better, out of 5; neutral cold-start baseline: 2.5 / 5.0 = 0.5)
+    effective_rating = (
+        pd.to_numeric(result["rating"], errors="coerce").fillna(2.5)
+        if "rating" in result.columns
+        else 2.5
+    )
+    result["rating_score"] = effective_rating / 5.0
     
-    # 4. Quality score (higher is better, out of 5)
-    result["quality_score_norm"] = result["quality_score"] / 5.0
+    # 4. Quality score (higher is better, out of 5; neutral cold-start baseline: 2.5 / 5.0 = 0.5)
+    effective_quality = (
+        pd.to_numeric(result["quality_score"], errors="coerce").fillna(2.5)
+        if "quality_score" in result.columns
+        else 2.5
+    )
+    result["quality_score_norm"] = effective_quality / 5.0
     
-    # 5. Reliability score (higher is better, out of 100)
-    result["reliability_score_norm"] = result["reliability_score"] / 100.0
+    # 5. Reliability score (higher is better, out of 100; neutral cold-start baseline: 50.0 / 100.0 = 0.5)
+    effective_reliability = (
+        pd.to_numeric(result["reliability_score"], errors="coerce").fillna(50.0)
+        if "reliability_score" in result.columns
+        else 50.0
+    )
+    result["reliability_score_norm"] = effective_reliability / 100.0
     
     # 6. Delivery score (lower is better, normalized by max value)
     max_delivery = result["average_delivery_time_min"].max()

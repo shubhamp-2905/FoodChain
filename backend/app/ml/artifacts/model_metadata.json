@@ -1,0 +1,50 @@
+{
+  "model_version": "1.1.0",
+  "algorithm": "KMeans",
+  "n_clusters": 2,
+  "random_state": 42,
+  "feature_columns": [
+    "price",
+    "distance_km",
+    "rating",
+    "quality_score",
+    "reliability_score",
+    "average_delivery_time_min"
+  ],
+  "training_rows": 9944,
+  "total_source_rows": 16530,
+  "evaluation_metrics": {
+    "inertia": 38776.94,
+    "silhouette_score": 0.3322,
+    "cluster_distribution": {
+      "0": {
+        "count": 2858,
+        "percentage": 28.74
+      },
+      "1": {
+        "count": 7086,
+        "percentage": 71.26
+      }
+    }
+  },
+  "cluster_centroids": {
+    "0": {
+      "price": 169.107,
+      "distance_km": 5.293,
+      "rating": 4.607,
+      "quality_score": 4.62,
+      "reliability_score": 94.486,
+      "average_delivery_time_min": 18.668
+    },
+    "1": {
+      "price": 138.599,
+      "distance_km": 4.467,
+      "rating": 4.033,
+      "quality_score": 4.036,
+      "reliability_score": 83.597,
+      "average_delivery_time_min": 36.027
+    }
+  },
+  "training_dataset": "pune_supplier_dataset.csv",
+  "trained_at": "2026-09-25T18:31:45.261544+00:00"
+}

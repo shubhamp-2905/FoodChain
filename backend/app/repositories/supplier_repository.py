@@ -47,13 +47,14 @@ class SupplierRepository:
         """
         query = db.query(Supplier)
 
-        # Apply search filter (name or supplier_id)
-        if search:
-            search_term = f"%{search}%"
+        # Apply search filter (name, supplier_id, or market)
+        if search and search.strip():
+            search_term = f"%{search.strip()}%"
             query = query.filter(
                 or_(
                     Supplier.supplier_name.ilike(search_term),
                     Supplier.supplier_id.ilike(search_term),
+                    Supplier.market.ilike(search_term),
                 )
             )
 

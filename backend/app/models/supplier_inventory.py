@@ -4,7 +4,7 @@ FoodChain AI - Supplier Inventory Model
 SQLAlchemy model linking suppliers and unique products with pricing and stock details.
 """
 
-from sqlalchemy import Float, Integer, ForeignKey
+from sqlalchemy import Float, Integer, ForeignKey, UniqueConstraint, Index, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
@@ -14,6 +14,19 @@ class SupplierInventory(Base):
     """SupplierInventory model representing an offering of a product by a supplier."""
 
     __tablename__ = "supplier_inventory"
+    __table_args__ = (
+        UniqueConstraint(
+            "supplier_id", "product_id", name="uq_supplier_inventory_supplier_product"
+        ),
+        Index("ix_supplier_inventory_product_price", "product_id", "price"),
+        CheckConstraint("price > 0", name="ck_supplier_inventory_price_positive"),
+        CheckConstraint(
+            "stock_available >= 0", name="ck_supplier_inventory_stock_non_negative"
+        ),
+        CheckConstraint(
+            "minimum_order >= 1", name="ck_supplier_inventory_min_order_positive"
+        ),
+    )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     supplier_id: Mapped[int] = mapped_column(

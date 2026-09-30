@@ -6,7 +6,7 @@ SQLAlchemy model for raw material suppliers.
 
 from datetime import datetime, timezone
 
-from sqlalchemy import String, Float, Integer, DateTime
+from sqlalchemy import String, Float, Integer, DateTime, Index, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
@@ -16,6 +16,34 @@ class Supplier(Base):
     """Supplier model representing a raw material supplier."""
 
     __tablename__ = "suppliers"
+    __table_args__ = (
+        Index("ix_suppliers_lat_lon", "latitude", "longitude"),
+        CheckConstraint("rating IS NULL OR (rating >= 0.0 AND rating <= 5.0)", name="ck_suppliers_rating_range"),
+        CheckConstraint(
+            "quality_score IS NULL OR (quality_score >= 0.0 AND quality_score <= 5.0)",
+            name="ck_suppliers_quality_score_range",
+        ),
+        CheckConstraint(
+            "reliability_score IS NULL OR (reliability_score >= 0.0 AND reliability_score <= 100.0)",
+            name="ck_suppliers_reliability_range",
+        ),
+        CheckConstraint(
+            "latitude >= -90.0 AND latitude <= 90.0",
+            name="ck_suppliers_latitude_range",
+        ),
+        CheckConstraint(
+            "longitude >= -180.0 AND longitude <= 180.0",
+            name="ck_suppliers_longitude_range",
+        ),
+        CheckConstraint(
+            "delivery_radius_km > 0.0",
+            name="ck_suppliers_delivery_radius_positive",
+        ),
+        CheckConstraint(
+            "average_delivery_time_min > 0",
+            name="ck_suppliers_avg_delivery_time_positive",
+        ),
+    )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     supplier_id: Mapped[str] = mapped_column(String(20), unique=True, nullable=False, index=True)
@@ -25,9 +53,9 @@ class Supplier(Base):
     area: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
     latitude: Mapped[float] = mapped_column(Float, nullable=False)
     longitude: Mapped[float] = mapped_column(Float, nullable=False)
-    quality_score: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
-    rating: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
-    reliability_score: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
+    quality_score: Mapped[float | None] = mapped_column(Float, nullable=True, default=None)
+    rating: Mapped[float | None] = mapped_column(Float, nullable=True, default=None)
+    reliability_score: Mapped[float | None] = mapped_column(Float, nullable=True, default=None)
     delivery_radius_km: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
     average_delivery_time_min: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     created_at: Mapped[datetime] = mapped_column(

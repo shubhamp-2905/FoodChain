@@ -11,7 +11,8 @@ import {
   Truck,
   ChevronRight,
   SlidersHorizontal,
-  Inbox
+  Inbox,
+  UserPlus
 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
@@ -33,6 +34,7 @@ import type { UserProfile } from "@/types/auth";
 import type { SupplierRecommendation } from "@/types/recommendation";
 import { AREAS, SUPPLIER_TYPES } from "@/types/supplier";
 import SupplierDetailsDrawer from "../recommendations/SupplierDetailsDrawer";
+import OnboardSupplierModal from "@/components/suppliers/OnboardSupplierModal";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -79,25 +81,48 @@ export default function SuppliersPage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [loadingDetails, setLoadingDetails] = useState(false);
 
-  // Load User, Ingredients, and initial Suppliers
+  // Onboard modal state
+  const [isOnboardModalOpen, setIsOnboardModalOpen] = useState(false);
+
+  const handleOnboardSuccess = (newSupplier: any) => {
+    setRawSuppliers((prev) => [newSupplier, ...prev]);
+    alert(`Supplier "${newSupplier.supplier_name}" successfully onboarded via Medallion Data Pipeline and is now recommendation-eligible!`);
+  };
+
+
+  // Load User and Ingredients on mount
   useEffect(() => {
     setUser(authService.getUser());
 
     supplierService.getIngredients()
       .then((data) => setIngredients(data))
       .catch((err) => console.error("Error fetching ingredients:", err));
-
-    // Fetch a large block of suppliers to filter and sort locally
-    supplierService.getSuppliers({ page: 1, limit: 300 })
-      .then((res) => {
-        setRawSuppliers(res.items);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error loading suppliers:", err);
-        setLoading(false);
-      });
   }, []);
+
+  // Fetch suppliers from backend whenever search, area, or supplierType changes
+  useEffect(() => {
+    setLoading(true);
+    const handler = setTimeout(() => {
+      supplierService.getSuppliers({
+        search: search.trim() || undefined,
+        area: area || undefined,
+        supplier_type: supplierType || undefined,
+        page: 1,
+        limit: 300,
+      })
+        .then((res) => {
+          setRawSuppliers(res.items);
+        })
+        .catch((err) => {
+          console.error("Error loading suppliers:", err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, 250);
+
+    return () => clearTimeout(handler);
+  }, [search, area, supplierType]);
 
   // Fetch product offerings if product filter is applied
   useEffect(() => {
@@ -167,9 +192,11 @@ export default function SuppliersPage() {
         cluster: 0, // Placeholder
         recommendation_score: 0.0, // Placeholder
         delivery_time: detail.average_delivery_time_min,
-        match_score: Math.round(detail.rating * 20), // Proxy match score
-        confidence: detail.rating >= 4.5 ? "High" : detail.rating >= 3.5 ? "Medium" : "Low",
-        reason: `Supplier from ${detail.area} with rating ${detail.rating.toFixed(1)} and delivery time of ${detail.average_delivery_time_min} mins.`,
+        match_score: detail.rating != null ? Math.round(detail.rating * 20) : 50,
+        confidence: detail.rating != null ? (detail.rating >= 4.5 ? "High" : detail.rating >= 3.5 ? "Medium" : "Low") : "Medium",
+        reason: detail.rating != null
+          ? `Supplier from ${detail.area} with rating ${detail.rating.toFixed(1)} and delivery time of ${detail.average_delivery_time_min} mins.`
+          : `New supplier from ${detail.area} with delivery time of ${detail.average_delivery_time_min} mins.`,
       };
 
       setDrawerSupplier(mapped);
@@ -229,7 +256,7 @@ export default function SuppliersPage() {
       return (a.selected_price || 99999) - (b.selected_price || 99999);
     }
     // Default sort by rating
-    return b.rating - a.rating;
+    return (b.rating ?? -1) - (a.rating ?? -1);
   });
 
   // Paginate
@@ -240,13 +267,23 @@ export default function SuppliersPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto px-2">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient-orange">
-          Supplier Directory
-        </h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Browse and filter raw material supplier catalogs across Pune markets.
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient-orange">
+            Supplier Directory
+          </h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            Browse and filter raw material supplier catalogs across Pune markets.
+          </p>
+        </div>
+
+        <Button
+          onClick={() => setIsOnboardModalOpen(true)}
+          className="gradient-orange text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 shadow-md hover:shadow-lg transition-all h-10 px-4 self-start sm:self-auto"
+        >
+          <UserPlus className="h-4 w-4" />
+          Onboard Supplier
+        </Button>
       </div>
 
       {/* Filter Control Console */}
@@ -440,9 +477,15 @@ export default function SuppliersPage() {
                   <div className="grid grid-cols-3 gap-1.5 text-center text-xs text-slate-600 dark:text-slate-400">
                     <div className="flex flex-col">
                       <span className="text-[9px] text-muted-foreground uppercase">Rating</span>
-                      <span className="font-bold text-slate-800 dark:text-slate-100 flex items-center justify-center gap-0.5 mt-0.5">
-                        <Star className="h-3 w-3 fill-amber-400 text-amber-400" /> {supplier.rating.toFixed(1)}
-                      </span>
+                      {supplier.rating != null ? (
+                        <span className="font-bold text-slate-800 dark:text-slate-100 flex items-center justify-center gap-0.5 mt-0.5">
+                          <Star className="h-3 w-3 fill-amber-400 text-amber-400" /> {supplier.rating.toFixed(1)}
+                        </span>
+                      ) : (
+                        <span className="text-[10px] text-muted-foreground font-semibold mt-0.5">
+                          Not rated
+                        </span>
+                      )}
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[9px] text-muted-foreground uppercase">Distance</span>
@@ -521,6 +564,13 @@ export default function SuppliersPage() {
           setIsDrawerOpen(false);
           setDrawerSupplier(null);
         }}
+      />
+
+      {/* Onboard Supplier Modal */}
+      <OnboardSupplierModal
+        isOpen={isOnboardModalOpen}
+        onClose={() => setIsOnboardModalOpen(false)}
+        onSuccess={handleOnboardSuccess}
       />
     </div>
   );

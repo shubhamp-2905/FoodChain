@@ -181,6 +181,12 @@ export default function DashboardLayout({
       return;
     }
 
+    // Supplier-role users belong in the supplier dashboard
+    if (storedUser?.role === "supplier") {
+      router.replace("/supplier-dashboard");
+      return;
+    }
+
     setUser(storedUser);
   }, [router]);
 

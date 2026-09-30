@@ -54,9 +54,24 @@ export default function SupplierDetailPage({
   }
 
   const infoItems = [
-    { icon: Star, label: "Rating", value: `${supplier.rating}/5`, color: "text-yellow-500" },
-    { icon: Shield, label: "Quality Score", value: `${supplier.quality_score}/5`, color: "text-blue-500" },
-    { icon: Shield, label: "Reliability", value: `${supplier.reliability_score}%`, color: "text-green-500" },
+    {
+      icon: Star,
+      label: "Rating",
+      value: supplier.rating != null ? `${supplier.rating.toFixed(1)}/5` : "Not rated",
+      color: "text-yellow-500",
+    },
+    {
+      icon: Shield,
+      label: "Quality Score",
+      value: supplier.quality_score != null ? `${supplier.quality_score.toFixed(1)}/5` : "Not available",
+      color: "text-blue-500",
+    },
+    {
+      icon: Shield,
+      label: "Reliability",
+      value: supplier.reliability_score != null ? `${supplier.reliability_score.toFixed(1)}%` : "Not available",
+      color: "text-green-500",
+    },
     { icon: Truck, label: "Delivery Radius", value: `${supplier.delivery_radius_km} km`, color: "text-purple-500" },
     { icon: Clock, label: "Avg. Delivery", value: `${supplier.average_delivery_time_min} min`, color: "text-orange-500" },
     { icon: MapPin, label: "Market", value: supplier.market, color: "text-red-500" },
@@ -92,7 +107,9 @@ export default function SupplierDetailPage({
             </div>
             <div className="flex items-center gap-1 text-sm">
               <Star className="h-3.5 w-3.5 text-yellow-500 fill-yellow-500" />
-              <span className="font-medium">{supplier.rating}</span>
+              <span className="font-medium">
+                {supplier.rating != null ? supplier.rating.toFixed(1) : "Not rated"}
+              </span>
             </div>
           </div>
         </div>

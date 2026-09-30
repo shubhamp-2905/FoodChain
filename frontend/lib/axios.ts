@@ -18,6 +18,7 @@ api.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("access_token");
+      console.log("Axios outgoing request:", { url: config.url, tokenLength: token ? token.length : 0 });
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -31,8 +32,14 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    console.error("API error response:", {
+      url: error.config?.url,
+      status: error.response?.status,
+      data: error.response?.data,
+    });
     if (error.response?.status === 401) {
       if (typeof window !== "undefined") {
+        console.warn("401 Unauthorized detected. Clearing token and redirecting to /login...");
         localStorage.removeItem("access_token");
         localStorage.removeItem("user");
         window.location.href = "/login";

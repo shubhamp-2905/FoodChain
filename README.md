@@ -230,12 +230,20 @@ The system includes a script to run feature extraction and train scikit-learn st
 
 ## Launching E2E Suite
 
+### Backend Setup
+Ensure the python environment is activated and dependencies are installed:
+```bash
+pip install -r backend/requirements.txt
+pip install -e .
+```
+
 ### Run Backend Tests
-Ensure the python environment is activated and dependencies are installed.
+Run backend tests with pytest:
 ```bash
 cd backend
-python -m unittest tests/test_recommendation_api.py
+python -m pytest
 ```
+
 
 ### Launch Development Server
 1. Start backend FastAPI:

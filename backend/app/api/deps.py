@@ -1,7 +1,7 @@
 """
 FoodChain AI - API Dependencies
 
-Shared dependencies for API routes (DB session, current user).
+Shared dependencies for API routes (DB session, current user, role guards).
 """
 
 from fastapi import Depends, HTTPException, status
@@ -48,3 +48,23 @@ def get_current_user(
         )
 
     return user
+
+
+def get_current_vendor(current_user: User = Depends(get_current_user)) -> User:
+    """Require the authenticated user to have role='vendor'."""
+    if getattr(current_user, "role", "vendor") != "vendor":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="This endpoint is restricted to vendor accounts.",
+        )
+    return current_user
+
+
+def get_current_supplier(current_user: User = Depends(get_current_user)) -> User:
+    """Require the authenticated user to have role='supplier'."""
+    if getattr(current_user, "role", "vendor") != "supplier":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="This endpoint is restricted to supplier accounts.",
+        )
+    return current_user

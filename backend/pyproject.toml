@@ -29,3 +29,10 @@ ignore = [
 exclude = [
     "alembic/*",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = [
+    ".",
+    "..",
+]
+

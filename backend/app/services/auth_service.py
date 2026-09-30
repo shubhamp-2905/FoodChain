@@ -23,6 +23,10 @@ def register_user(db: Session, data: RegisterRequest) -> tuple[User, str]:
         raise DuplicateException("A user with this email already exists")
 
     # Construct user model
+    role = getattr(data, "role", "vendor") or "vendor"
+    if role not in ("vendor", "supplier"):
+        role = "vendor"
+
     user = User(
         full_name=data.full_name,
         email=data.email,
@@ -35,6 +39,7 @@ def register_user(db: Session, data: RegisterRequest) -> tuple[User, str]:
         area=data.area,
         city=data.city,
         state=data.state,
+        role=role,
     )
 
     # Save via repository
@@ -42,8 +47,8 @@ def register_user(db: Session, data: RegisterRequest) -> tuple[User, str]:
 
     logger.info(f"User registered: {user.email} (ID: {user.id})")
 
-    # Generate token
-    token = create_access_token(subject=user.id)
+    # Generate token with role embedded
+    token = create_access_token(subject=user.id, role=user.role)
 
     return user, token
 
@@ -62,7 +67,7 @@ def authenticate_user(db: Session, data: LoginRequest) -> tuple[User, str]:
 
     logger.info(f"User authenticated: {user.email} (ID: {user.id})")
 
-    # Generate token
-    token = create_access_token(subject=user.id)
+    # Generate token with role embedded
+    token = create_access_token(subject=user.id, role=user.role)
 
     return user, token

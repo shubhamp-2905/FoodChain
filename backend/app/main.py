@@ -16,6 +16,7 @@ from app.api.suppliers import router as suppliers_router
 from app.api.products import router as products_router
 from app.api.ingredients import router as ingredients_router
 from app.api.recommendation import router as recommendation_router
+from app.api.supplier_account import router as supplier_account_router
 from app.utils.logger import logger
 
 # ============================================
@@ -50,29 +51,53 @@ app.include_router(suppliers_router)
 app.include_router(products_router)
 app.include_router(ingredients_router)
 app.include_router(recommendation_router)
+app.include_router(supplier_account_router)
 
 # ============================================
 # Exception Handlers
 # ============================================
 
 
+def add_cors_headers(request: Request, response: JSONResponse) -> JSONResponse:
+    """Add CORS headers to custom responses (e.g., exception responses)."""
+    origin = request.headers.get("origin")
+    if origin:
+        import re
+        allowed = False
+        if origin in settings.cors_origins:
+            allowed = True
+        else:
+            # Matches the regex pattern used in CORSMiddleware
+            regex = r"https?://(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+|frontend|.*\.vercel\.app)(:\d+)?"
+            if re.match(regex, origin):
+                allowed = True
+        if allowed:
+            response.headers["Access-Control-Allow-Origin"] = origin
+            response.headers["Access-Control-Allow-Credentials"] = "true"
+            response.headers["Access-Control-Allow-Methods"] = "*"
+            response.headers["Access-Control-Allow-Headers"] = "*"
+    return response
+
+
 @app.exception_handler(AppException)
 async def app_exception_handler(request: Request, exc: AppException):
     """Handle all custom application exceptions."""
-    return JSONResponse(
+    response = JSONResponse(
         status_code=exc.status_code,
         content={"detail": exc.detail},
     )
+    return add_cors_headers(request, response)
 
 
 @app.exception_handler(Exception)
 async def generic_exception_handler(request: Request, exc: Exception):
     """Handle unexpected exceptions."""
     logger.error(f"Unexpected error: {exc}", exc_info=True)
-    return JSONResponse(
+    response = JSONResponse(
         status_code=500,
         content={"detail": "Internal server error"},
     )
+    return add_cors_headers(request, response)
 
 
 # ============================================

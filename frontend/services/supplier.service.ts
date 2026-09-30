@@ -37,4 +37,15 @@ export const supplierService = {
     const response = await api.get<string[]>("/ingredients");
     return response.data;
   },
+
+  async onboardSupplier(payload: any): Promise<Supplier> {
+    const response = await api.post<Supplier>("/suppliers/onboard", payload);
+    return response.data;
+  },
+
+  async addInventory(supplierId: number, payload: any): Promise<Product> {
+    const response = await api.post<Product>(`/suppliers/${supplierId}/inventory`, payload);
+    return response.data;
+  },
 };
+

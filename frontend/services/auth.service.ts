@@ -37,7 +37,6 @@ export const authService = {
     return response.data;
   },
 
-
   // Token management
   setToken(token: string): void {
     localStorage.setItem("access_token", token);
@@ -63,8 +62,21 @@ export const authService = {
     return user ? JSON.parse(user) : null;
   },
 
+  getRole(): "vendor" | "supplier" | null {
+    const user = this.getUser();
+    return user?.role ?? null;
+  },
+
   isAuthenticated(): boolean {
     return !!this.getToken();
+  },
+
+  isVendor(): boolean {
+    return this.getRole() === "vendor";
+  },
+
+  isSupplier(): boolean {
+    return this.getRole() === "supplier";
   },
 
   logout(): void {

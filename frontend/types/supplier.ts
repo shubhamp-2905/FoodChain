@@ -11,9 +11,9 @@ export interface Supplier {
   area: string;
   latitude: number;
   longitude: number;
-  quality_score: number;
-  rating: number;
-  reliability_score: number;
+  quality_score: number | null;
+  rating: number | null;
+  reliability_score: number | null;
   delivery_radius_km: number;
   average_delivery_time_min: number;
   products?: Product[];
@@ -46,6 +46,29 @@ export interface PaginatedResponse<T> {
   page: number;
   limit: number;
   pages: number;
+}
+
+export interface CreateSupplierPayload {
+  supplier_name: string;
+  supplier_type?: string;
+  market?: string;
+  area: string;
+  latitude: number;
+  longitude: number;
+  delivery_radius_km?: number;
+  average_delivery_time_min?: number;
+  quality_score?: number;
+  rating?: number;
+  reliability_score?: number;
+}
+
+export interface CreateInventoryPayload {
+  ingredient: string;
+  category?: string;
+  unit?: string;
+  price: number;
+  stock_available: number;
+  minimum_order?: number;
 }
 
 export const SUPPLIER_TYPES = [

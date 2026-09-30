@@ -21,6 +21,7 @@ class RegisterRequest(BaseModel):
     area: str | None = Field(None, min_length=2, max_length=100, examples=["Kharadi"])
     city: str | None = Field(None, min_length=2, max_length=100, examples=["Pune"])
     state: str | None = Field(None, min_length=2, max_length=100, examples=["Maharashtra"])
+    role: str = Field(default="vendor", examples=["vendor"])
 
 
 class LoginRequest(BaseModel):

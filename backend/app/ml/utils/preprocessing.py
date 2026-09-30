@@ -98,19 +98,9 @@ def preprocess_offerings(
     if df.empty:
         return pd.DataFrame(), pd.DataFrame()
         
-    # 4. Select ML features in the exact order as notebooks
-    features = [
-        "price",
-        "distance_km",
-        "rating",
-        "quality_score",
-        "reliability_score",
-        "average_delivery_time_min"
-    ]
-    
-    for feature in features:
-        if feature not in df.columns:
-            raise ValueError(f"Required ML feature '{feature}' is missing from the offerings data.")
-            
-    X = df[features].copy()
+    # 4. Select ML features using unified FeaturePreprocessor
+    from app.ml.preprocessing.preprocessor import FeaturePreprocessor, CANONICAL_FEATURES
+
+    X = FeaturePreprocessor.extract_and_align_features(df, CANONICAL_FEATURES)
     return df, X
+

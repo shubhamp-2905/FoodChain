@@ -4,6 +4,7 @@ FoodChain AI - Product Repository
 Database access layer for unique Product operations.
 """
 
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from app.models.product import Product
 
@@ -18,9 +19,10 @@ class ProductRepository:
 
     @staticmethod
     def get_by_ingredient(db: Session, ingredient: str) -> Product | None:
-        """Fetch unique product by exact ingredient name (case-insensitive)."""
+        """Fetch unique product by exact ingredient name (case-insensitive) using functional index."""
+        clean_ingredient = ingredient.strip().lower()
         return db.query(Product).filter(
-            Product.ingredient.ilike(ingredient)
+            func.lower(Product.ingredient) == clean_ingredient
         ).first()
 
     @staticmethod

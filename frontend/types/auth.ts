@@ -14,6 +14,7 @@ export interface RegisterRequest {
   mobile_number: string;
   business_name: string;
   food_type: string;
+  role?: "vendor" | "supplier";
   latitude?: number | null;
   longitude?: number | null;
   area?: string | null;
@@ -34,6 +35,8 @@ export interface UserProfile {
   mobile_number: string;
   business_name: string;
   food_type: string;
+  role: "vendor" | "supplier";
+  supplier_profile_id: number | null;
   latitude: number | null;
   longitude: number | null;
   area: string | null;

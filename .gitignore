@@ -47,6 +47,8 @@ models/*.joblib
 # ---------- Data ----------
 data/*.csv
 data/*.parquet
+data/pipeline_output/
+backend/data/
 
 # ---------- Logs ----------
 *.log
